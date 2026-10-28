@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0f1c30" />
+  <title>Misi Koding × AI | Kelas XI TKP</title>
+  <style>
+    :root {
+      --bg:#0b1424; --panel:#14243a; --panel2:#1b3049; --text:#f4f8fc;
+      --muted:#afc1d5; --teal:#18c6b2; --gold:#ffc45c; --coral:#ff776b;
+      --green:#61d69b; --line:#2a4562; --shadow:0 18px 55px rgba(0,0,0,.25);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:radial-gradient(circle at 85% 0%,#183d50 0,transparent 34%),linear-gradient(140deg,#0b1424,#101d30 60%,#0c2431);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;min-height:100vh}
+    button,input{font:inherit}
+    .wrap{width:min(1040px,calc(100% - 28px));margin:0 auto;padding:24px 0 42px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--teal),#087f91);display:grid;place-items:center;color:#06232c;font-weight:1000;font-size:19px;box-shadow:0 8px 22px #18c6b230}
+    .brand strong{display:block;letter-spacing:.04em;font-size:14px}
+    .brand small{color:var(--muted);font-size:12px}
+    .pill{border:1px solid var(--line);border-radius:999px;padding:8px 12px;color:var(--muted);font-size:12px;white-space:nowrap}
+    .hero{display:grid;grid-template-columns:1.35fr .65fr;gap:18px;align-items:stretch;margin-bottom:18px}
+    .hero-copy,.hero-art,.card{background:linear-gradient(145deg,rgba(24,43,67,.96),rgba(17,32,51,.96));border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow)}
+    .hero-copy{padding:clamp(22px,4vw,40px)}
+    .eyebrow{color:var(--teal);font-weight:850;letter-spacing:.14em;text-transform:uppercase;font-size:11px}
+    h1{font-size:clamp(32px,5vw,54px);line-height:1.04;margin:14px 0}
+    h1 span{color:var(--teal)}
+    .lead{color:var(--muted);font-size:16px;line-height:1.65;max-width:600px}
+    .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
+    .chip{font-size:12px;padding:8px 11px;border-radius:999px;background:#203c52;color:#d9f7f1;border:1px solid #31566a}
+    .hero-art{padding:22px;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;overflow:hidden}
+    .blueprint{width:min(100%,260px);aspect-ratio:1;border:1px solid #2a6170;border-radius:20px;background:linear-gradient(90deg,transparent 49%,#255062 50%,transparent 51%),linear-gradient(transparent 49%,#255062 50%,transparent 51%),#102b3d;background-size:25px 25px;display:grid;place-items:center;position:relative}
+    .blueprint:before{content:"";position:absolute;width:58%;height:58%;border:3px solid var(--teal);box-shadow:0 0 0 7px #18c6b214,inset 0 0 0 20px #18c6b20b}
+    .blueprint:after{content:"AI × TKP";position:absolute;bottom:18px;right:14px;font-weight:900;color:var(--gold);font-size:12px;letter-spacing:.12em}
+    .cube{font-size:54px;filter:drop-shadow(0 8px 18px #18c6b240)}
+    .art-note{color:var(--muted);font-size:12px;text-align:center;margin-top:14px;line-height:1.5}
+    .card{padding:clamp(20px,3vw,30px)}
+    .section-title{margin:0 0 8px;font-size:23px}
+    .muted{color:var(--muted);line-height:1.6}
+    .field{display:block;margin:18px 0 8px;font-weight:750;font-size:13px}
+    input[type=text]{width:100%;padding:15px 16px;background:#0c192a;color:var(--text);border:1px solid #35516e;border-radius:14px;outline:none}
+    input[type=text]:focus{border-color:var(--teal);box-shadow:0 0 0 3px #18c6b220}
+    .btn{border:0;border-radius:14px;padding:14px 18px;font-weight:850;cursor:pointer;transition:transform .15s,filter .15s}
+    .btn:hover{filter:brightness(1.08);transform:translateY(-1px)}
+    .btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+    .btn-primary{background:linear-gradient(135deg,var(--teal),#5fe1c7);color:#06232c}
+    .btn-secondary{background:#223b55;color:var(--text);border:1px solid #365674}
+    .btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+    .rules{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}
+    .rule{padding:14px;border-radius:15px;background:#102034;border:1px solid #263f59}
+    .rule b{display:block;font-size:19px;color:var(--gold);margin-bottom:4px}
+    .rule span{color:var(--muted);font-size:12px;line-height:1.4}
+    .hidden{display:none!important}
+    .game-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}
+    .game-top .muted{font-size:13px}
+    .progress-track{height:8px;background:#0a1726;border-radius:99px;overflow:hidden;margin:14px 0 22px;border:1px solid #263d55}
+    .progress-bar{height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--gold));transition:width .25s}
+    .question-count{font-size:12px;color:var(--teal);font-weight:900;letter-spacing:.12em;text-transform:uppercase}
+    .question{font-size:clamp(22px,3vw,30px);line-height:1.3;margin:12px 0 22px}
+    .options{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .option{display:flex;align-items:flex-start;gap:12px;text-align:left;padding:16px;background:#102034;border:1px solid #2c4561;border-radius:16px;color:var(--text);cursor:pointer;min-height:78px;transition:.15s}
+    .option:hover{border-color:var(--teal);background:#153044}
+    .option.selected{border-color:var(--teal);background:#103a42;box-shadow:0 0 0 2px #18c6b21c}
+    .letter{flex:0 0 30px;width:30px;height:30px;display:grid;place-items:center;border-radius:10px;background:#25425b;color:var(--gold);font-weight:900}
+    .option.selected .letter{background:var(--teal);color:#08252d}
+    .option-text{line-height:1.5;font-size:14px}
+    .question-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:22px}
+    .result-head{display:grid;grid-template-columns:180px 1fr;gap:24px;align-items:center}
+    .score-ring{width:165px;height:165px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--teal) var(--score,0%),#263b50 0);position:relative;margin:auto}
+    .score-ring:before{content:"";position:absolute;inset:11px;background:#13243a;border-radius:50%}
+    .score-inner{position:relative;text-align:center}
+    .score-inner strong{font-size:42px;display:block;line-height:1.1}
+    .score-inner small{color:var(--muted)}
+    .result-title{font-size:clamp(25px,4vw,36px);margin:0 0 8px}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:22px 0}
+    .stat{padding:15px;border:1px solid var(--line);border-radius:15px;background:#102034}
+    .stat b{display:block;font-size:23px;color:var(--gold)}
+    .stat span{font-size:12px;color:var(--muted)}
+    .review-list{display:grid;gap:10px;margin-top:18px}
+    .review{padding:16px;border-radius:15px;border:1px solid var(--line);background:#102034}
+    .review.correct{border-left:4px solid var(--green)}
+    .review.wrong{border-left:4px solid var(--coral)}
+    .review h4{margin:0 0 8px;font-size:14px;line-height:1.5}
+    .review p{margin:5px 0;color:var(--muted);font-size:13px;line-height:1.55}
+    .review .answer{color:var(--green)}
+    .review .your-answer{color:var(--gold)}
+    .notice{padding:12px 14px;background:#173348;border:1px solid #2a5a6d;border-radius:12px;color:#c8f8ed;font-size:13px;line-height:1.55;margin-top:16px}
+    footer{text-align:center;color:#7890a9;font-size:11px;margin-top:22px}
+    @media(max-width:720px){.hero{grid-template-columns:1fr}.hero-art{display:none}.options{grid-template-columns:1fr}.rules{grid-template-columns:1fr}.result-head{grid-template-columns:1fr;text-align:center}.game-top{align-items:flex-start}.pill{white-space:normal}.question-footer{align-items:stretch}.question-footer .btn{flex:1}.stats{grid-template-columns:1fr 1fr 1fr}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <div class="logo">AI</div>
+      <div><strong>MISI KODING × AI</strong><small>Kelas XI • Teknik Konstruksi dan Perumahan</small></div>
+    </div>
+    <div class="pill">🎯 15 tantangan · Maks. 100 poin</div>
+  </header>
+
+  <section id="intro">
+    <div class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">Pertemuan ke-4 · Game pemahaman</div>
+        <h1>Jadilah tim<br><span>perencana cerdas.</span></h1>
+        <p class="lead">Uji pemahamanmu tentang prompt AI, koding sederhana, luas dinding, RAB, survei lahan, K3, dokumen proyek, dan etika profesional. Jawab dengan teliti, bukan sekadar cepat.</p>
+        <div class="chips"><span class="chip">⚡ Tantangan pilihan ganda</span><span class="chip">🧠 Ulasan jawaban</span><span class="chip">🏗️ Kasus konstruksi</span></div>
+      </div>
+      <div class="hero-art"><div class="blueprint"><div class="cube">🏗️</div></div><div class="art-note">DATA YANG BAIK + PROMPT JELAS<br>+ VERIFIKASI MANUSIA</div></div>
+    </div>
+    <div class="card">
+      <h2 class="section-title">Siap memulai misi?</h2>
+      <p class="muted">Masukkan nama lengkap agar hasil belajar tercatat di rekap kelas.</p>
+      <label class="field" for="studentName">Nama siswa</label>
+      <input id="studentName" type="text" maxlength="80" placeholder="Contoh: Andi Pratama" autocomplete="name" />
+      <div class="rules">
+        <div class="rule"><b>15 soal</b><span>Topik diambil dari materi pertemuan.</span></div>
+        <div class="rule"><b>100 poin</b><span>Skor akhir dihitung otomatis.</span></div>
+        <div class="rule"><b>Review</b><span>Lihat jawaban benar dan pembahasan setelah selesai.</span></div>
+      </div>
+      <div class="btn-row"><button class="btn btn-primary" id="startBtn">Mulai misi →</button></div>
+      <div id="startError" class="muted hidden" style="color:var(--coral);margin-top:10px">Masukkan nama terlebih dahulu.</div>
+    </div>
+  </section>
+
+  <section id="game" class="hidden">
+    <div class="card">
+      <div class="game-top">
+        <div><div class="eyebrow">Misi berlangsung</div><div class="muted" id="playerLabel">Peserta</div></div>
+        <div class="pill" id="answeredPill">Terjawab 0/15</div>
+      </div>
+      <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+      <div class="question-count" id="questionCount">SOAL 1 DARI 15</div>
+      <h2 class="question" id="questionText"></h2>
+      <div class="options" id="options"></div>
+      <div class="question-footer">
+        <button class="btn btn-secondary" id="prevBtn">← Sebelumnya</button>
+        <button class="btn btn-primary" id="nextBtn">Pilih jawaban →</button>
+      </div>
+      <p class="muted" style="font-size:12px;margin-bottom:0">Pilih satu jawaban. Pilihan dapat diubah sebelum misi dikirim.</p>
+    </div>
+  </section>
+
+  <section id="results" class="hidden">
+    <div class="card">
+      <div class="eyebrow">Misi selesai</div>
+      <div class="result-head" style="margin-top:16px">
+        <div class="score-ring" id="scoreRing"><div class="score-inner"><strong id="scoreValue">0</strong><small>/ 100 poin</small></div></div>
+        <div>
+          <h2 class="result-title" id="resultTitle">Hasil belajarmu</h2>
+          <p class="muted" id="resultMessage"></p>
+          <div class="notice" id="saveStatus">Menyiapkan penyimpanan hasil…</div>
+        </div>
+      </div>
+      <div class="stats">
+        <div class="stat"><b id="correctCount">0/15</b><span>Jawaban benar</span></div>
+        <div class="stat"><b id="wrongCount">0</b><span>Perlu dipelajari lagi</span></div>
+        <div class="stat"><b id="durationValue">0:00</b><span>Waktu pengerjaan</span></div>
+      </div>
+      <h3>📘 Rangkuman jawaban</h3>
+      <p class="muted">Gunakan ulasan ini untuk mengetahui konsep yang sudah dikuasai dan yang perlu dipelajari kembali.</p>
+      <div class="review-list" id="reviewList"></div>
+      <div class="btn-row">
+        <button class="btn btn-primary" id="retryBtn">Main lagi</button>
+        <button class="btn btn-secondary" id="printBtn">Cetak / simpan hasil</button>
+      </div>
+    </div>
+  </section>
+  <footer>Media pembelajaran • Koding dan AI untuk proyek rumah tinggal • Kelas XI TKP</footer>
+</div>
+
+<script>
+  // GANTI URL DI BAWAH dengan URL Web App Google Apps Script yang berakhiran /exec.
+  // URL tidak ditampilkan pada layar siswa.
+  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzuP2tEk-7oa9yNbPXHOCYDGK9EGJ5WNmLtX4KNpZXsLCNk4-NF_pzHzKpicafSjUgxow/exec";
+
+  const QUESTIONS = [
+    {q:"Sebelum meminta AI membuat konsep rumah, tindakan paling tepat adalah …", options:["Langsung menyalin desain dari internet","Menentukan kebutuhan ruang, ukuran, dan data proyek","Menentukan warna presentasi terlebih dahulu","Meminta AI menebak semua kondisi lahan"], correct:1, explain:"Perencanaan dimulai dari kebutuhan dan data yang jelas. AI baru membantu setelah konteks dan batasan diberikan."},
+    {q:"Apa ciri utama instruksi koding dibandingkan AI generatif?", options:["Selalu menghasilkan jawaban kreatif","Tidak memerlukan input","Menjalankan aturan atau instruksi yang ditulis secara eksplisit","Tidak pernah membutuhkan pemeriksaan"], correct:2, explain:"Koding mengikuti instruksi eksplisit. Hasilnya bergantung pada program dan input yang diberikan."},
+    {q:"Prompt yang paling kuat untuk konsep rumah adalah …", options:["Buat rumah yang bagus","Buat desain bebas, jangan bertanya","Buat rumah mewah sekarang","Buat konsep rumah 6 × 8 m, dua kamar, dan jelaskan asumsi serta hal yang perlu diverifikasi"], correct:3, explain:"Prompt yang baik berisi konteks, tugas, data, format keluaran, dan batasan."},
+    {q:"Satu bidang dinding memiliki panjang 8 m dan tinggi 3 m. Luas bidangnya adalah …", options:["11 m²","24 m²","24 m","48 m²"], correct:1, explain:"Luas bidang persegi panjang = panjang × tinggi = 8 × 3 = 24 m²."},
+    {q:"Mengapa luas bidang dinding belum tentu sama dengan luas bersih untuk menghitung pekerjaan?", options:["Karena satuan meter tidak boleh digunakan","Karena dinding tidak memiliki ukuran","Karena bukaan pintu dan jendela mungkin perlu diperhitungkan","Karena luas selalu dihitung dengan penjumlahan"], correct:2, explain:"Untuk perhitungan bersih, bukaan seperti pintu dan jendela dapat perlu dikurangkan sesuai metode pengukuran pekerjaan."},
+    {q:"Pada kode `luas = panjang * tinggi`, tanda `*` berarti …", options:["Perkalian","Penjumlahan","Pembagian","Penggabungan teks"], correct:0, explain:"Operator `*` digunakan untuk perkalian. Untuk luas persegi panjang, panjang dikalikan tinggi."},
+    {q:"Kode menghitung luas menggunakan `luas = panjang + tinggi`. Apa masalahnya?", options:["Nama variabel terlalu pendek","Satuan meter tidak boleh dipakai","Kode tidak bisa memiliki angka","Operatornya salah untuk menghitung luas persegi panjang"], correct:3, explain:"Penjumlahan menghasilkan jumlah panjang dan tinggi, bukan luas. Operasi yang tepat adalah perkalian."},
+    {q:"Rumus dasar menghitung biaya pekerjaan dalam RAB adalah …", options:["Harga satuan ÷ kuantitas","Kuantitas × harga satuan","Kuantitas + tanggal","Luas × warna material"], correct:1, explain:"Biaya pekerjaan dasar dihitung dari kuantitas dikalikan harga satuan, dengan cakupan dan metode ukur yang jelas."},
+    {q:"AI memberikan harga material tanpa menyebutkan sumber. Apa yang sebaiknya dilakukan?", options:["Langsung memakai angka tersebut","Memilih angka paling murah","Memverifikasi sumber, lokasi, tanggal, spesifikasi, dan satuannya","Menganggap semua harga dari AI selalu benar"], correct:2, explain:"Harga satuan perlu diverifikasi sesuai lokasi, waktu, spesifikasi, dan cakupan biaya."},
+    {q:"Dalam survei lahan menggunakan foto drone, mengapa akurasi dan titik kontrol penting?", options:["Agar gambar lebih berwarna","Agar ukuran dan pemetaan dapat diperiksa terhadap kondisi sebenarnya","Agar tidak perlu pengukuran lapangan sama sekali","Agar AI menentukan semua keputusan"], correct:1, explain:"Akurasi, skala, titik kontrol, dan pengecekan lapangan membantu menilai keandalan hasil pemetaan."},
+    {q:"Sistem AI mendeteksi pekerja yang diduga tidak memakai APD. Tindakan profesional adalah …", options:["Langsung menghukum tanpa pemeriksaan","Mengabaikan semua peringatan AI","Menghapus rekaman agar tidak ada masalah","Memeriksa peringatan dan menindaklanjuti sesuai prosedur K3"], correct:3, explain:"AI dapat salah mendeteksi. Pengawasan manusia dan prosedur K3 tetap dibutuhkan untuk tindak lanjut."},
+    {q:"Saat menggunakan AI untuk merangkum dokumen RKS, apa yang harus dilakukan?", options:["Mencocokkan ringkasan dengan dokumen asli, pasal, spesifikasi, dan versi terbaru","Menghapus dokumen asli setelah diringkas","Menganggap ringkasan selalu lengkap","Mengunggah semua dokumen rahasia ke alat publik"], correct:0, explain:"Ringkasan AI perlu dibandingkan dengan dokumen asli, termasuk nomor pasal, spesifikasi, dan revisi."},
+    {q:"Manakah contoh penggunaan AI yang bertanggung jawab?", options:["Menyalin hasil AI tanpa membaca","Menyatakan semua hasil AI pasti benar","Memeriksa hasil AI, menjaga data, dan bertanggung jawab atas keputusan","Menggunakan AI untuk mengganti semua prosedur keselamatan"], correct:2, explain:"AI adalah alat bantu. Pengguna tetap perlu memeriksa hasil dan bertanggung jawab atas keputusan."},
+    {q:"Informasi apa yang sebaiknya ditambahkan saat meminta AI membuat RAB?", options:["Hanya kata “cepat”","Data ukuran, spesifikasi, lokasi, format, dan asumsi yang diperlukan","Nama panggilan saja","Instruksi agar AI tidak menjelaskan sumber"], correct:1, explain:"Data yang cukup dan batasan yang jelas membantu AI memberi draf yang lebih relevan, tetapi hasil tetap perlu diperiksa."},
+    {q:"Kesimpulan paling tepat tentang pemanfaatan AI dalam konstruksi adalah …", options:["AI selalu lebih benar daripada tenaga ahli","Hasil AI tidak perlu diperiksa jika tampilannya rapi","AI dapat menggantikan seluruh tanggung jawab profesional","AI membantu pekerjaan, sedangkan manusia memvalidasi dan mengambil keputusan"], correct:3, explain:"AI membantu proses kerja, tetapi validasi teknis, keselamatan, etika, dan keputusan profesional tetap menjadi tanggung jawab manusia."}
+  ];
+
+  const $ = id => document.getElementById(id);
+  let questions = [], index = 0, answers = [], studentName = "", startTime = 0, endTime = 0, submitted = false;
+
+  function shuffle(array) {
+    const a = array.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function prepareQuestions() {
+    questions = QUESTIONS.map((q, qi) => {
+      const options = q.options.map((text, oi) => ({text, originalIndex: oi}));
+      const mixed = shuffle(options);
+      return {...q, sourceIndex: qi, mixedOptions: mixed, correctMixedIndex: mixed.findIndex(o => o.originalIndex === q.correct)};
+    });
+    answers = Array(questions.length).fill(null);
+    index = 0;
+  }
+
+  function showScreen(id) {
+    ["intro","game","results"].forEach(s => $(s).classList.toggle("hidden", s !== id));
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+
+  function startGame() {
+    const name = $("studentName").value.trim();
+    if (!name) {
+      $("startError").classList.remove("hidden");
+      $("studentName").focus();
+      return;
+    }
+    $("startError").classList.add("hidden");
+    studentName = name.slice(0,80);
+    prepareQuestions();
+    startTime = Date.now();
+    submitted = false;
+    $("playerLabel").textContent = "Peserta: " + studentName;
+    showScreen("game");
+    renderQuestion();
+  }
+
+  function renderQuestion() {
+    const q = questions[index];
+    $("questionCount").textContent = `SOAL ${index+1} DARI ${questions.length}`;
+    $("questionText").textContent = q.q;
+    $("answeredPill").textContent = `Terjawab ${answers.filter(a=>a!==null).length}/${questions.length}`;
+    $("progressBar").style.width = `${((index+1)/questions.length)*100}%`;
+    $("options").innerHTML = "";
+    q.mixedOptions.forEach((opt, oi) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "option" + (answers[index] === oi ? " selected" : "");
+      btn.setAttribute("aria-pressed", answers[index] === oi ? "true" : "false");
+      const letter = document.createElement("span");
+      letter.className = "letter";
+      letter.textContent = String.fromCharCode(65+oi);
+      const txt = document.createElement("span");
+      txt.className = "option-text";
+      txt.textContent = opt.text;
+      btn.append(letter,txt);
+      btn.addEventListener("click", () => {
+        answers[index] = oi;
+        renderQuestion();
+      });
+      $("options").appendChild(btn);
+    });
+    $("prevBtn").disabled = index === 0;
+    $("nextBtn").textContent = index === questions.length-1 ? "Selesaikan misi ✓" : "Berikutnya →";
+    $("nextBtn").disabled = answers[index] === null;
+  }
+
+  function goNext() {
+    if (answers[index] === null) return;
+    if (index < questions.length-1) {
+      index++;
+      renderQuestion();
+    } else {
+      finishGame();
+    }
+  }
+
+  function goPrev() {
+    if (index > 0) {
+      index--;
+      renderQuestion();
+    }
+  }
+
+  function formatDuration(ms) {
+    const total = Math.max(0, Math.floor(ms/1000));
+    return `${Math.floor(total/60)}:${String(total%60).padStart(2,"0")}`;
+  }
+
+  function finishGame() {
+    if (submitted) return;
+    submitted = true;
+    endTime = Date.now();
+    const correct = questions.reduce((n,q,i) => n + (answers[i] === q.correctMixedIndex ? 1 : 0), 0);
+    const score = Math.round(correct / questions.length * 100);
+    const duration = endTime - startTime;
+    $("scoreValue").textContent = score;
+    $("scoreRing").style.setProperty("--score", score + "%");
+    $("correctCount").textContent = `${correct}/${questions.length}`;
+    $("wrongCount").textContent = questions.length-correct;
+    $("durationValue").textContent = formatDuration(duration);
+    $("resultTitle").textContent = score >= 85 ? "Luar biasa, perencana!" : score >= 70 ? "Bagus, terus tingkatkan!" : score >= 55 ? "Fondasi sudah terbentuk!" : "Saatnya latihan lagi!";
+    $("resultMessage").textContent = `${studentName}, kamu menjawab benar ${correct} dari ${questions.length} soal. Baca ulasan di bawah untuk menguatkan pemahaman.`;
+    renderReview();
+    showScreen("results");
+    saveResult({studentName,score,correct,total:questions.length,durationSeconds:Math.floor(duration/1000),answers:buildRecap(),timestamp:new Date().toISOString()});
+  }
+
+  function buildRecap() {
+    return questions.map((q,i) => ({
+      nomor:i+1,
+      soal:q.q,
+      jawabanSiswa: answers[i] === null ? "(tidak dijawab)" : q.mixedOptions[answers[i]].text,
+      jawabanBenar:q.options[q.correct],
+      benar:answers[i] === q.correctMixedIndex,
+      pembahasan:q.explain
+    }));
+  }
+
+  function renderReview() {
+    $("reviewList").innerHTML = "";
+    buildRecap().forEach(item => {
+      const article = document.createElement("article");
+      article.className = "review " + (item.benar ? "correct" : "wrong");
+      const h = document.createElement("h4");
+      h.textContent = `${item.nomor}. ${item.soal}`;
+      const your = document.createElement("p");
+      your.className = "your-answer";
+      your.textContent = "Jawabanmu: " + item.jawabanSiswa;
+      const correct = document.createElement("p");
+      correct.className = "answer";
+      correct.textContent = "Jawaban benar: " + item.jawabanBenar;
+      const expl = document.createElement("p");
+      expl.textContent = "Pembahasan: " + item.pembahasan;
+      article.append(h,your,correct,expl);
+      $("reviewList").appendChild(article);
+    });
+  }
+
+  async function saveResult(result) {
+    const status = $("saveStatus");
+    if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes("TEMPEL_URL_")) {
+      status.textContent = "Game selesai, tetapi backend belum dihubungkan. Guru perlu memasukkan URL Web App Apps Script ke dalam index.html sebelum dipublikasikan.";
+      return;
+    }
+    status.textContent = "Mengirim hasil ke rekap kelas…";
+    const payload = {
+      studentName: result.studentName,
+      score: result.score,
+      correct: result.correct,
+      total: result.total,
+      durationSeconds: result.durationSeconds,
+      recap: result.answers,
+      timestamp: result.timestamp
+    };
+    try {
+      // text/plain + no-cors digunakan agar browser GitHub Pages dapat mengirim POST lintas domain.
+      // Karena mode no-cors, browser tidak mengizinkan halaman membaca balasan server.
+      await fetch(APPS_SCRIPT_URL, {
+        method:"POST",
+        mode:"no-cors",
+        headers:{"Content-Type":"text/plain;charset=utf-8"},
+        body:JSON.stringify(payload)
+      });
+      status.textContent = "Hasil telah dikirim ke sistem penyimpanan. Karena batasan keamanan browser, status akhir perlu dikonfirmasi guru melalui Google Sheets.";
+    } catch (err) {
+      status.textContent = "Pengiriman otomatis gagal. Periksa koneksi internet dan URL Web App Apps Script, lalu coba lagi atau hubungi guru.";
+    }
+  }
+
+  $("startBtn").addEventListener("click", startGame);
+  $("studentName").addEventListener("keydown", e => { if (e.key === "Enter") startGame(); });
+  $("prevBtn").addEventListener("click", goPrev);
+  $("nextBtn").addEventListener("click", goNext);
+  $("retryBtn").addEventListener("click", () => {
+    $("studentName").value = studentName;
+    showScreen("intro");
+  });
+  $("printBtn").addEventListener("click", () => window.print());
+</script>
+</body>
+</html>
